@@ -11,3 +11,6 @@ number = int(input("Enter a number: "))
 factors = find_factors(number)
 
 print(f"The factors of {number} are: {factors}")
+import time
+print("\nThis window will close in 2 minutes...")
+time.sleep(120)
