@@ -12,5 +12,5 @@ factors = find_factors(number)
 
 print(f"The factors of {number} are: {factors}")
 import time
-print("\nThis window will close in 1 minute...")
-time.sleep(60)
+print("\nThis window will close in 30 seconds...")
+time.sleep(30)
