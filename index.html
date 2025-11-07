@@ -29,7 +29,7 @@
             background: linear-gradient(135deg, #2a2a2a, #3a3a4a);
         }
 
-        /* Navbar Styles - Original with smaller mobile size */
+        /* Navbar Styles */
         #navbar {
             position: fixed;
             top: 0;
@@ -309,6 +309,47 @@
             animation: liquidMorph 0.8s ease-in-out;
         }
 
+        /* My Story Section - Seamless & Styled */
+        #my-story {
+            padding: 150px 40px;
+            text-align: center;
+            background: rgba(20, 20, 20, 0.6);
+            border-radius: 40px;
+            margin: 50px;
+            backdrop-filter: blur(5px);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #my-story h2 {
+            font-size: 3.5em;
+            color: #4B0082;
+            margin-bottom: 60px;
+            text-shadow: 0 0 15px rgba(128, 0, 0, 0.4);
+        }
+
+        #my-story p {
+            font-size: 1.6em;
+            line-height: 1.9;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background: rgba(40, 40, 50, 0.5);
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: teleportIn 0.8s ease-out forwards 0.3s;
+        }
+
+        #my-story p:hover {
+            background: rgba(75, 0, 130, 0.3);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(75, 0, 130, 0.5);
+        }
+
         /* Animations */
         @keyframes glow {
             from { box-shadow: 0 0 10px rgba(128, 0, 0, 0.2); }
@@ -361,16 +402,16 @@
             100% { opacity: 0.5; transform: scale(1); }
         }
 
-        /* Responsive Design - Only adjusting navbar size for mobile */
+        /* Responsive Design */
         @media (max-width: 768px) {
             #navbar {
-                padding: 15px 20px; /* Smaller padding */
-                gap: 30px; /* Smaller gap */
+                padding: 15px 20px;
+                gap: 30px;
             }
 
             #navbar a {
-                font-size: 18px; /* Smaller font size */
-                padding: 8px 15px; /* Smaller padding */
+                font-size: 18px;
+                padding: 8px 15px;
             }
 
             #welcome-section h1 {
@@ -387,7 +428,7 @@
                 padding: 30px;
             }
 
-            #projects, #social-media, #profile, #certifications {
+            #projects, #social-media, #profile, #certifications, #my-story {
                 padding: 100px 20px;
                 margin: 30px;
             }
@@ -412,6 +453,11 @@
                 padding: 20px 40px;
                 font-size: 1.6em;
             }
+
+            #my-story p {
+                font-size: 1.4em;
+                padding: 25px;
+            }
         }
     </style>
 </head>
@@ -419,7 +465,7 @@
     <!-- Particle Background -->
     <div id="particles-js"></div>
 
-    <!-- Navbar - Original structure maintained -->
+    <!-- Navbar -->
     <nav id="navbar">
         <a href="#welcome-section">Home</a>
         <a href="#projects">Projects</a>
@@ -470,27 +516,31 @@
 
     <!-- Certifications Section -->
     <section id="certifications">
-        <h2>My Certifications(click on the certification to see the cert)</h2>
+        <h2>My Certifications (click to view)</h2>
         <div class="cert-container">
             <a href="SP_HTML&CSS_Jan31.pdf.png" target="_blank" class="cert-link">HTML & CSS Certification</a>
             <a href="SP_Python_Dec17.pdf.png" target="_blank" class="cert-link">Python Certification</a>
         </div>
     </section>
 
-    <section id="my story">
+    <!-- My Story Section - Fully Integrated -->
+    <section id="my-story">
+        <h2>My Story</h2>
         <p>I've always been interested in technology—how it works and what makes it function. As I grew up, I often asked myself these kinds of questions. Around fourth grade, I started getting more into games and began using Scratch, where I learned to use block-based coding. I continued exploring and experimenting with extensions, although I mostly created simple and basic games.
 In my freshman year, I took an entry-level computer science class and discovered a new coding platform called Microsoft MakeCode Arcade. That same year, I also learned a bit of HTML. The following year, I joined both the robotics club and robotics class. In my junior year, I enrolled in the Software and App Design program at EVIT, where I earned certifications in both Python and HTML/CSS.
 During my senior year, I chose to participate in the Tech Device Maintenance course at EVIT. I'm also currently attending an AI bootcamp run by the Mark Cuban Foundation.</p>
+    </section>
 
     <!-- Particles.js Script -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
+        // Particle Configuration
         const particleConfig = {
             "particles": {
                 "number": { "value": 10000, "density": { "enable": true, "value_area": 5000 } },
                 "color": { "value": ["#800000", "#000080", "#4B0082"] },
                 "shape": { "type": "circle" },
-                "opacity": { "value": 10, "random": true },
+                "opacity": { "value": 0.6, "random": true },
                 "size": { "value": 7, "random": true },
                 "line_linked": { "enable": false },
                 "move": { 
@@ -516,8 +566,10 @@ During my senior year, I chose to participate in the Tech Device Maintenance cou
             "retina_detect": true
         };
 
+        // Initialize Particles
         particlesJS('particles-js', particleConfig);
 
+        // Override particle creation to add burst animation
         const originalParticlesCreate = pJSDom[0].pJS.fn.particlesCreate;
         pJSDom[0].pJS.fn.particlesCreate = function() {
             originalParticlesCreate.call(this);
@@ -527,9 +579,10 @@ During my senior year, I chose to participate in the Tech Device Maintenance cou
             });
         };
 
+        // Respawn particles when too many are removed
         function checkAndRespawnParticles() {
             const particleCount = pJSDom[0].pJS.particles.array.length;
-            if (particleCount === 0) {
+            if (particleCount < 2000) {
                 pJSDom[0].pJS.fn.particlesEmpty();
                 pJSDom[0].pJS.fn.particlesCreate();
                 pJSDom[0].pJS.fn.particlesUpdate();
@@ -538,6 +591,7 @@ During my senior year, I chose to participate in the Tech Device Maintenance cou
 
         setInterval(checkAndRespawnParticles, 500);
 
+        // Typing Effect for Title
         const title = document.getElementById('typing-title');
         const text = title.textContent;
         title.textContent = '';
